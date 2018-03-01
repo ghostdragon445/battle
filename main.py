@@ -23,7 +23,9 @@ hielixer = Item("MegaElixer", "elixer", "Fully restores HP/MP of the party", 999
 grenade = Item("Grenade", "attack", "Deals 500 damage", 500)
 
 player_spells = [fire, thunder, blizzard, meteor, quake, cure, cura]
-player_items = [potion, hipotion, superpotion, elixer, hielixer, grenade]
+player_items = [{"item": potion, "quantity": 15}, {"item:": hipotion, "quantity": 5},
+                {"item": superpotion, "quantity": 5}, {"item": elixer, "qiantity":5}, {"item": hielixer, "quantity": 5},
+                {"item": grenade, "quantity": 3}]
 player = Person(450, 65, 60, 34, player_spells, player_items)
 enemy = Person(1200, 65, 45, 25, [], [])
 
@@ -56,7 +58,7 @@ while running:
         current_mp = player.get_mp()
 
         if spell.cost > current_mp:
-            print(bcolours.FAIL + "\nNot enough MP\n" + bcolours.ENDC)
+            print(bcolours.FAIL + "\nNot enough MP\n" + "\n Current MP:" + str(player.get_mp()) + bcolours.ENDC)
             continue
 
         player.reduce_mp(spell.cost)
@@ -68,8 +70,6 @@ while running:
             enemy.take_damage(magic_dmg)
             print(bcolours.OKBLUE + "\n" + spell.name + " deals", str(magic_dmg), "points of damage!" + bcolours.ENDC)
 
-        enemy.take_damage(magic_dmg)
-        print(bcolours.OKBLUE + "\n" + spell + " deals", str(magic_dmg), "points of damage" + bcolours.ENDC)
     elif index == 2:
         player.choose_item()
         item_choice = int(input("choose item: ")) - 1
@@ -82,7 +82,13 @@ while running:
         if item.type == "potion":
             player.heal(item.prop)
             print(bcolours.OKGREEN + "\n" + item.name + "heals for", str(item.prop), "HP:", bcolours.ENDC)
-
+        elif item.type == "elixer":
+            player.hp = player.maxhp
+            player.mp = player.maxmp
+            print(bcolours.OKGREEN + "\n" + item.name + " fully restored HP/MP" + bcolours.ENDC)
+        elif item.type == "attack":
+            enemy.take_damage(item.prop)
+            print(bcolours.FAIL + "\n" + item.name + "deals", str(item.prop), "points of damage" + bcolours.ENDC)
     enemy_choice = 1
 
     enemy_dmg = enemy.generate_damage()
