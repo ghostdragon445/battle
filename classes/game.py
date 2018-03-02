@@ -72,5 +72,5 @@ class Person:
 
         print("\n" + bcolours.OKGREEN + bcolours.BOLD + "ITEMS:" + bcolours.ENDC)
         for item in self.items:
-            print(str(iact) + ".", item.name, ":", item.description, " (x5)")
+            print("  " + str(iact) + ".", item["item"].name + ":", item["item"].description, "(x" + str(item["quantity"] + ")"))
             iact += 1
