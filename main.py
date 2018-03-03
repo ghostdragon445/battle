@@ -44,8 +44,10 @@ while running:
     print("==================================")
 
     print("\n\n")
+    print("NAME:                 HP:                                  MP:")
     for player in players:
         player.get_stats()
+
     print("\n")
 
     for player in players:
