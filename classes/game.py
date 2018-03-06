@@ -78,9 +78,91 @@ class Person:
                   " (x" + str(item["quantity"]) + ")")
             iact += 1
 
+    def choose_target(self, enemies):
+        i = 0
+        print("\n" + bcolours.FAIL + bcolours.BOLD + "    TARGET:" + bcolours.ENDC)
+        for enemy in enemies:
+            print("        " + str(i) + ".", enemy.name)
+            i += 1
+
+    def get_enemy_stats(self):
+        hp_bar = ""
+        bar_ticks = (self.hp / self.maxhp) * 100 / 2
+
+        while bar_ticks > 0:
+            hp_bar += "█"
+            bar_ticks -= 1
+
+        while len(hp_bar) < 50:
+            hp_bar += " "
+
+        hp_string = str(self.hp) + "/" + str(self.maxhp)
+        current_hp = ""
+        if len(hp_string) < 11:
+            decreased = 11 - len(hp_string)
+
+            while decreased > 0:
+                current_hp += " "
+                decreased -= 1
+
+            current_hp += hp_string
+        else:
+            current_hp = hp_string
+
+        print("                      ______________________________________________________________________________")
+        print(bcolours.BOLD + self.name + " " +
+              current_hp + "  |" + bcolours.FAIL + hp_bar + bcolours.ENDC + bcolours.BOLD + "|")
+
     def get_stats(self):
-        print("                      _________________________            __________")
+        hp_bar = ""
+        hp_ticks = (self.hp / self.maxhp) * 100 / 4
+
+        mp_bar = ""
+        mp_ticks = (self.mp / self.maxmp) * 100 / 10
+
+        while hp_ticks > 0:
+            hp_bar += "█"
+            hp_ticks -= 1
+
+        while len(hp_bar) < 25:
+            hp_bar += " "
+
+        while mp_ticks > 0:
+            mp_bar += "█"
+            mp_ticks -= 1
+
+        while len(hp_bar) < 10:
+            hp_bar += " "
+
+        hp_string = str(self.hp) + "/" + str(self.maxhp)
+        current_hp = ""
+        if len(hp_string) < 9:
+            decreased = 9 - len(hp_string)
+
+            while decreased > 0:
+                current_hp += " "
+                decreased -= 1
+
+            current_hp += hp_string
+        else:
+            current_hp = hp_string
+
+        mp_string = str(self.mp) + "/" + str(self.maxmp)
+        current_mp = ""
+        if len(mp_string) < 7:
+            decreased_mp = 7 - len(mp_string)
+
+            while decreased_mp > 0:
+                current_mp += " "
+                decreased_mp -= 1
+
+            current_mp += mp_string
+        else:
+            current_mp = mp_string
+
+        print("                      _______________________________________              ________________")
         print(bcolours.BOLD + self.name + "    " +
-              str(self.hp) + "/" + str(self.maxhp) + "  |" + bcolours.OKGREEN + "████████████████" + bcolours.ENDC + bcolours.BOLD +
-              "|    " + str(self.mp)+"/" + str(self.maxmp) + " |" + bcolours.OKBLUE + "███     " + bcolours.ENDC +
+              current_hp + "  |" + bcolours.OKGREEN + hp_bar +
+              bcolours.ENDC + bcolours.BOLD +
+              "|    " + current_mp + " |" + bcolours.OKBLUE + mp_bar + bcolours.ENDC +
               bcolours.BOLD + "|" + bcolours.ENDC)
